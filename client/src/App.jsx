@@ -4,19 +4,30 @@ function App() {
   const [inputText, setInputText] = useState('');
   const [frequencyTable, setFrequencyTable] = useState({});
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch('http://localhost:3000/lemmatize', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: inputText }),
-      });
-      const data = await response.json();
-      setFrequencyTable(data);
-    } catch (err) {
-      console.error(err);
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setInputText(e.target.value);
+    // send the text to the server
+    await fetch(`http://localhost:3000/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ inputText }),
+    });
+
+    // try {
+    //   const response = await fetch('http://localhost:3000/lemmatize', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ text: inputText }),
+    //   });
+    //   const data = await response.json();
+    //   setFrequencyTable(data);
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
   return (
     <>
@@ -25,14 +36,13 @@ function App() {
       </header>
       <main>
         <form action="/lemmatize" method="post" onSubmit={handleSubmit}>
-          <label htmlFor="input-text">Input German Text:</label>
-          <textarea
-            name="input-text"
-            id="input-text"
-            cols="20"
-            rows="10"
-          ></textarea>
-          <button type="submit">Lemmatize</button>
+          <label htmlFor="inputText">Input German Text:</label>
+          <textarea name="inputText" id="inputText" rows="10">
+            {inputText}
+          </textarea>
+          <div>
+            <button type="submit">Lemmatize</button>
+          </div>
         </form>
       </main>
       <footer>
@@ -48,3 +58,5 @@ export default App;
 // Form
 // Table
 // Footer
+
+// TODO: send text from form to backend
