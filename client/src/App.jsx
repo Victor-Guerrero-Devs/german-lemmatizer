@@ -5,6 +5,7 @@ function App() {
   const [frequencyTable, setFrequencyTable] = useState({});
 
   const handleSubmit = async (e) => {
+    // TODO: send text from form to backend
     e.preventDefault();
 
     setInputText(e.target.value);
@@ -58,5 +59,3 @@ export default App;
 // Form
 // Table
 // Footer
-
-// TODO: send text from form to backend
